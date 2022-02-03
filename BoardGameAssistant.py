@@ -8,13 +8,19 @@ detector = checkersDetector.CheckersDetector(pathToYolo='checkersDetector/yolov5
 
 def detect_checkers(image_path, chat_id):
 	img = cv2.imread(image_path)
-	res = detector.getGameField(img,visualize=True)
-	cv2.imwrite("layout.jpg", res[1])
-	cv2.imwrite("game.jpg", res[0])
+	visual, layout, res_white, res_black  = detector.getGameField(img,visualize=True)
+	cv2.imwrite("layout.jpg", layout)
+	cv2.imwrite("game.jpg", visual)
+	cv2.imwrite("res_white.jpg", res_white)
+	cv2.imwrite("res_black.jpg", res_black)
 	bot.send_message(chat_id=chat_id, text='Detected layout:')
 	bot.send_photo(chat_id=chat_id, photo=open("layout.jpg", 'rb'))
 	bot.send_message(chat_id=chat_id, text='Digitized game:')
 	bot.send_photo(chat_id=chat_id, photo=open("game.jpg", 'rb'))
+	bot.send_message(chat_id=chat_id, text='Suggested white move:')
+	bot.send_photo(chat_id=chat_id, photo=open("res_white.jpg", 'rb'))
+	bot.send_message(chat_id=chat_id, text='Suggested black move:')
+	bot.send_photo(chat_id=chat_id, photo=open("res_black.jpg", 'rb'))
 
 CONFIG_PATH = "config.json"
 with open(CONFIG_PATH) as f:
