@@ -6,9 +6,9 @@ from checkers import checkersDetector
 
 detector = checkersDetector.CheckersDetector(pathToYolo='checkers/yolov5', pathToModel='checkers/models/detector.pt')
 
-def detect_checkers(image_path, chat_id):
+def detect_checkers(image_path, chat_id, top_white):
 	img = cv2.imread(image_path)
-	visual, layout, res_white, res_black  = detector.getGameField(img,visualize=True)
+	visual, layout, res_white, res_black  = detector.getGameField(img,visualize=True, roll=top_white)
 	cv2.imwrite("layout.jpg", layout)
 	cv2.imwrite("game.jpg", visual)
 	cv2.imwrite("res_white.jpg", res_white)
