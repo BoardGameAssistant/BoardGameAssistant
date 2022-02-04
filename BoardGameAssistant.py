@@ -27,4 +27,9 @@ with open(CONFIG_PATH) as f:
 	config = json.load(f)
 
 BOT_TOKEN = config['TG_BOT_KEY']
-bot = tgbot.initBot(token=BOT_TOKEN, classifyGameFunction=gameClassifier.classifyGameImage, detect_checkersFunction=detect_checkers)
+
+handlers_fns = {
+	'classifyGame': gameClassifier.classifyGameImage, 
+	'detect_checkers': detect_checkers
+}
+bot = tgbot.initBot(token=BOT_TOKEN, handlers_fns=handlers_fns)
