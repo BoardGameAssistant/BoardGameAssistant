@@ -2,9 +2,9 @@ import cv2
 import json
 from tgbot import tgbot
 from gameClassifier import gameClassifier
-from checkersDetector import checkersDetector
+from checkers import checkersDetector
 
-detector = checkersDetector.CheckersDetector(pathToYolo='checkersDetector/yolov5', pathToModel='checkersDetector/detector.pt')
+detector = checkersDetector.CheckersDetector(pathToYolo='checkers/yolov5', pathToModel='checkers/models/detector.pt')
 
 def detect_checkers(image_path, chat_id):
 	img = cv2.imread(image_path)
