@@ -1,6 +1,7 @@
 import cv2
 import json
 from tgbot import tgbot
+from tictactoe import pipeline
 from gameClassifier import gameClassifier
 from checkers import checkersDetector
 
@@ -22,6 +23,15 @@ def detect_checkers(image_path, chat_id, top_white):
 	bot.send_message(chat_id=chat_id, text='Suggested black move:')
 	bot.send_photo(chat_id=chat_id, photo=open("res_black.jpg", 'rb'))
 
+def detect_tictactoe(image_path, chat_id):
+	result = pipeline.execute_pipline(image_path=image_path)
+	print(len(result))
+	if result[0] == 'Cannot detect game properly':
+		bot.send_message(chat_id=chat_id, text='Unable to recognize game situation')
+	else:
+		cv2.imwrite("ttt.jpg", result[0])
+		bot.send_photo(chat_id=chat_id, photo=open("ttt.jpg", 'rb'))
+
 CONFIG_PATH = "config.json"
 with open(CONFIG_PATH) as f:
 	config = json.load(f)
@@ -30,6 +40,7 @@ BOT_TOKEN = config['TG_BOT_KEY']
 
 handlers_fns = {
 	'classifyGame': gameClassifier.classifyGameImage, 
-	'detect_checkers': detect_checkers
+	'detect_checkers': detect_checkers,
+	'detect_tictactoe': detect_tictactoe
 }
 bot = tgbot.initBot(token=BOT_TOKEN, handlers_fns=handlers_fns)
