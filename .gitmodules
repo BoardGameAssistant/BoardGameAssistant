@@ -10,3 +10,6 @@
 [submodule "tictactoe"]
 	path = tictactoe
 	url = https://github.com/BoardGameAssistant/tictactoe.git
+[submodule "carcassone"]
+	path = carcassone
+	url = https://github.com/BoardGameAssistant/Carcassonne.git
